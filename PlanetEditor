@@ -1,0 +1,35 @@
+[CustomEditor(typeof(PlanetScript))]
+public class PlanetEditor : Editor
+{
+    PlanetScript planet;
+
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        DrawSettingsEditor(planet.shapeSettings, planet.OnShapeUpdated);
+        DrawSettingsEditor(planet.colourSettings, planet.OnColourUpdated);
+    }
+
+    void DrawSettingsEditor(Object settings, System.Action onSettingsUpdated)
+    {
+        using (var Check = new EditorGUI.ChangeCheckScope())
+        {
+            Editor editor = CreateEditor(settings);
+            editor.OnInspectorGUI();
+
+            if (Check.changed)
+            {
+                if (onSettingsUpdated != null)
+                {
+                    onSettingsUpdated();
+                }
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        planet = (PlanetScript)target;
+    }
+}
