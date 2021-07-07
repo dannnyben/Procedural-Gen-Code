@@ -1,0 +1,13 @@
+[CreateAssetMenu]
+public class ShapeSettings : ScriptableObject
+{
+    public int planetRadius = 1;
+    public NoiseLayer[] noiseLayer;
+
+    [System.Serializable]
+    public class NoiseLayer
+    {
+        public bool enabled = true;
+        public noiseSettings noiseSettings;
+    }
+}
